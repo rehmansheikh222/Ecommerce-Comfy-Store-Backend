@@ -41,7 +41,13 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: tokenUser })
 }
 const logout = async (req, res) => {
-  res.send('Logout user')
+  res.cookie('token', 'logout', {
+    httpOnly: true,
+    expire: new Date(Date.now()),
+    //expires: new Date(Date.now() + 5 * 1000), // This will remove the cookie in 5 seconds (Can't test in postman)
+  })
+  // res.status(StatusCodes.NO_CONTENT).end()
+  res.status(StatusCodes.OK).json({ msg: 'User logged out' })
 }
 
 module.exports = {
